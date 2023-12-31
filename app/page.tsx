@@ -1,4 +1,5 @@
 import { ModeToggle } from "@/components/ModeToggle";
+import LoginButton from "@/components/auth/LoginButton";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Poppins } from "next/font/google";
@@ -22,7 +23,9 @@ export default function Home() {
         </h1>
         <p className="text-lg ">Authentication service</p>
         <div className="flex items-center space-x-2">
-          <Button size="lg">Sign In</Button>
+          <LoginButton>
+            <Button size="lg">Sign In</Button>
+          </LoginButton>
           <ModeToggle />
         </div>
       </div>
