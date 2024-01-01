@@ -1,11 +1,10 @@
 "use client";
 
-import React from "react";
-import CardWrapper from "./CardWrapper";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 import { loginSchema } from "@/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import { Button } from "../ui/button";
 import {
   Form,
   FormControl,
@@ -15,7 +14,8 @@ import {
   FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
-import { Button } from "../ui/button";
+import CardWrapper from "./CardWrapper";
+import FormResult from "./FormResult";
 
 const LoginForm = () => {
   const form = useForm<z.infer<typeof loginSchema>>({
@@ -26,6 +26,10 @@ const LoginForm = () => {
     },
   });
 
+  const onSubmit = (values: z.infer<typeof loginSchema>) => {
+    console.log(values);
+  };
+
   return (
     <CardWrapper
       headerLabel="Welcome back"
@@ -34,7 +38,7 @@ const LoginForm = () => {
       showSocial
     >
       <Form {...form}>
-        <form className="space-y-6" onSubmit={form.handleSubmit(() => {})}>
+        <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
           <div className="space-y-4">
             <FormField
               control={form.control}
@@ -67,6 +71,7 @@ const LoginForm = () => {
               )}
             />
           </div>
+          <FormResult />
           <Button type="submit" className="w-full shadow-md">
             Login
           </Button>
