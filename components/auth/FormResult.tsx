@@ -1,21 +1,24 @@
-import { CheckCircledIcon, ExclamationTriangleIcon } from "@radix-ui/react-icons";
+import {
+  CheckCircledIcon,
+  ExclamationTriangleIcon,
+} from "@radix-ui/react-icons";
 
 interface Props {
   message?: string;
-  success?: boolean;
+  error?: boolean;
 }
 
-const FormResult = ({ message, success }: Props) => {
+const FormResult = ({ message, error }: Props) => {
   if (!message) return null;
 
-  return success ? (
-    <div className="bg-emerald-500/15 p-3 rounded-md flex items-center gap-x-2 text-sm text-emerald-700">
-      <CheckCircledIcon className="h-4 w-4" />
+  return error ? (
+    <div className="bg-destructive/15 p-3 rounded-md flex items-center gap-x-2 text-sm text-destructive dark:text-red-800">
+      <ExclamationTriangleIcon className="h-4 w-4" />
       <p>{message}</p>
     </div>
   ) : (
-    <div className="bg-destructive/15 p-3 rounded-md flex items-center gap-x-2 text-sm text-destructive">
-      <ExclamationTriangleIcon className="h-4 w-4" />
+    <div className="bg-emerald-500/15 p-3 rounded-md flex items-center gap-x-2 text-sm text-emerald-700 dark:text-emerald-500">
+      <CheckCircledIcon className="h-4 w-4" />
       <p>{message}</p>
     </div>
   );
