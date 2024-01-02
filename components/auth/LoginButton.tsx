@@ -13,7 +13,7 @@ const LoginButton = ({ children, mode = "redirect", asChild }: Props) => {
   const router = useRouter();
 
   const onClick = () => {
-    router.push("/auth/login");
+    router.push("/login");
   };
 
   // Modal version

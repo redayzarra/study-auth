@@ -1,7 +1,7 @@
 "use client";
 
 import { login } from "@/actions/login";
-import { loginSchema } from "@/schemas";
+import { registerSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
@@ -18,12 +18,14 @@ import {
 import { Input } from "../ui/input";
 import CardWrapper from "./CardWrapper";
 import FormResult from "./FormResult";
+import { register } from "@/actions/register";
 
-const LoginForm = () => {
-  const form = useForm<z.infer<typeof loginSchema>>({
-    resolver: zodResolver(loginSchema),
+const RegisterForm = () => {
+  const form = useForm<z.infer<typeof registerSchema>>({
+    resolver: zodResolver(registerSchema),
     defaultValues: {
-      emailUsername: "",
+      username: "",
+      email: "",
       password: "",
     },
   });
@@ -36,18 +38,18 @@ const LoginForm = () => {
   // Acts as my loading state
   const [isPending, startTransition] = useTransition();
 
-  const onSubmit = (values: z.infer<typeof loginSchema>) => {
+  const onSubmit = (values: z.infer<typeof registerSchema>) => {
     // Make sure to reinitialize the error and message as defaults
     setError(false);
     setMessage("");
 
     startTransition(() => {
-      login(values).then((data) => {
+      register(values).then((data) => {
         // If there is an error, then mark error to be true
         if (data.error) {
           setError(true);
           setMessage(data.error);
-        // Error is already false so we can store the message
+          // Error is already false so we can store the message
         } else {
           setMessage(data.success);
         }
@@ -57,9 +59,9 @@ const LoginForm = () => {
 
   return (
     <CardWrapper
-      headerLabel="Welcome back!"
-      backButtonHref="/register"
-      backButtonLabel="Don't have an account?"
+      headerLabel="Welcome to the community!"
+      backButtonHref="/login"
+      backButtonLabel="Already have an account?"
       showSocial
     >
       <Form {...form}>
@@ -67,16 +69,33 @@ const LoginForm = () => {
           <div className="space-y-4">
             <FormField
               control={form.control}
-              name="emailUsername"
+              name="username"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email or username</FormLabel>
+                  <FormLabel>Username</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
                       disabled={isPending}
-                      placeholder="Enter your email or username"
-                      type="text"
+                      placeholder="E.g. TheCapn"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      disabled={isPending}
+                      placeholder="E.g. steve.rodgers@gmail.com"
+                      type="email"
                     />
                   </FormControl>
                   <FormMessage />
@@ -93,7 +112,7 @@ const LoginForm = () => {
                     <Input
                       disabled={isPending}
                       {...field}
-                      placeholder="Enter your password"
+                      placeholder="Enter a password"
                       type="password"
                     />
                   </FormControl>
@@ -112,4 +131,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default RegisterForm;
