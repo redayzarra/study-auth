@@ -30,7 +30,7 @@ export const register = async (values: z.infer<typeof registerSchema>) => {
   const existingUsername = await getUserByUsername(username);
 
   if (existingUsername) {
-    return {error: "Username is taken"}
+    return { error: "Username is taken" };
   }
 
   await db.user.create({
