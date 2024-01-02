@@ -11,7 +11,7 @@ const font = Poppins({
 
 export default function Home() {
   return (
-    <main className="flex h-full flex-col items-center justify-center bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-background to-muted-foreground/50 dark:from-accent dark:to-background">
+    <main className="flex h-full flex-col items-center justify-center">
       <div className="space-y-6 flex flex-col items-center justify-center">
         <h1
           className={cn(
